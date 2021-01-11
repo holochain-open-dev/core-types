@@ -1,0 +1,1 @@
+{"version":3,"file":"hashed.js","sourceRoot":"","sources":["../src/hashed.ts"],"names":[],"mappings":"","sourcesContent":["export interface HoloHashed<T> {\n  hash: Uint8Array;\n  content: T;\n}\n"]}
