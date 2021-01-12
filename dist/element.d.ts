@@ -1,6 +1,6 @@
-import { Entry } from './entry';
-import { Header } from './header';
+import { Entry } from "./entry";
+import { SignedHeaderHashed } from "./header";
 export declare type Element = {
-    header: Header;
-    maybe_entry: Entry | undefined;
+    signed_header: SignedHeaderHashed;
+    entry: Entry | undefined;
 };

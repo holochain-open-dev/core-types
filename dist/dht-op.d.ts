@@ -1,6 +1,6 @@
-import { CreateLink, Delete, DeleteLink, Header, NewEntryHeader, Update } from './header';
-import { Element } from './element';
-import { Entry } from './entry';
+import { CreateLink, Delete, DeleteLink, Header, NewEntryHeader, SignedHeaderHashed, Update } from "./header";
+import { Element } from "./element";
+import { Entry } from "./entry";
 export declare enum DHTOpType {
     StoreElement = "StoreElement",
     StoreEntry = "StoreEntry",
@@ -13,9 +13,9 @@ export declare enum DHTOpType {
     RegisterRemoveLink = "RegisterRemoveLink"
 }
 export declare const DHT_SORT_PRIORITY: DHTOpType[];
-export interface DHTOpContent<T, H> {
+export interface DHTOpContent<T, H extends Header> {
     type: T;
-    header: H;
+    header: SignedHeaderHashed<H>;
 }
 export declare type DHTOp = (DHTOpContent<DHTOpType.StoreElement, Header> & {
     maybe_entry: Entry | undefined;

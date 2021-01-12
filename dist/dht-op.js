@@ -1,4 +1,4 @@
-import { HeaderType, } from './header';
+import { HeaderType, } from "./header";
 // https://github.com/holochain/holochain/blob/develop/crates/types/src/dht_op.rs
 export var DHTOpType;
 (function (DHTOpType) {
@@ -28,62 +28,62 @@ export function elementToDHTOps(element) {
     // All hdk commands have these two DHT Ops
     allDhtOps.push({
         type: DHTOpType.RegisterAgentActivity,
-        header: element.header,
+        header: element.signed_header,
     });
     allDhtOps.push({
         type: DHTOpType.StoreElement,
-        header: element.header,
-        maybe_entry: element.maybe_entry,
+        header: element.signed_header,
+        maybe_entry: element.entry,
     });
     // Each header derives into different DHTOps
-    if (element.header.type == HeaderType.Update) {
+    if (element.signed_header.header.content.type == HeaderType.Update) {
         allDhtOps.push({
             type: DHTOpType.RegisterUpdatedContent,
-            header: element.header,
+            header: element.signed_header,
         });
         allDhtOps.push({
             type: DHTOpType.RegisterUpdatedElement,
-            header: element.header,
+            header: element.signed_header,
         });
         allDhtOps.push({
             type: DHTOpType.StoreEntry,
-            header: element.header,
-            entry: element.maybe_entry,
+            header: element.signed_header,
+            entry: element.entry,
         });
     }
-    else if (element.header.type == HeaderType.Create) {
+    else if (element.signed_header.header.content.type == HeaderType.Create) {
         allDhtOps.push({
             type: DHTOpType.StoreEntry,
-            header: element.header,
-            entry: element.maybe_entry,
+            header: element.signed_header,
+            entry: element.entry,
         });
     }
-    else if (element.header.type == HeaderType.Delete) {
+    else if (element.signed_header.header.content.type == HeaderType.Delete) {
         allDhtOps.push({
             type: DHTOpType.RegisterDeletedBy,
-            header: element.header,
+            header: element.signed_header,
         });
         allDhtOps.push({
             type: DHTOpType.RegisterDeletedEntryHeader,
-            header: element.header,
+            header: element.signed_header,
         });
     }
-    else if (element.header.type == HeaderType.DeleteLink) {
+    else if (element.signed_header.header.content.type == HeaderType.DeleteLink) {
         allDhtOps.push({
             type: DHTOpType.RegisterRemoveLink,
-            header: element.header,
+            header: element.signed_header,
         });
     }
-    else if (element.header.type == HeaderType.CreateLink) {
+    else if (element.signed_header.header.content.type == HeaderType.CreateLink) {
         allDhtOps.push({
             type: DHTOpType.RegisterAddLink,
-            header: element.header,
+            header: element.signed_header,
         });
     }
     return allDhtOps;
 }
 export function sortDHTOps(dhtOps) {
-    const prio = (dhtOp) => DHT_SORT_PRIORITY.findIndex(type => type === dhtOp.type);
+    const prio = (dhtOp) => DHT_SORT_PRIORITY.findIndex((type) => type === dhtOp.type);
     return dhtOps.sort((dhtA, dhtB) => prio(dhtA) - prio(dhtB));
 }
 export function getEntry(dhtOp) {

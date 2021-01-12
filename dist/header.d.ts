@@ -1,12 +1,11 @@
-import { AgentPubKey, Hash } from "./common";
+import { AgentPubKey, Hash, Signature } from "./common";
 import { EntryType } from "./entry";
 import { HoloHashed } from "./hashed";
 import { Timestamp } from "./timestamp";
-export interface SignedHeaderHashed {
-    header: HeaderHashed;
+export interface SignedHeaderHashed<H extends Header = Header> {
+    header: HoloHashed<H>;
     signature: Signature;
 }
-export declare type Signature = any;
 export declare type HeaderHashed = HoloHashed<Header>;
 export declare enum HeaderType {
     Dna = "Dna",
