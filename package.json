@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "description": "Typescript types for holochain core",
   "main": "dist/index.js",
+  "files": ["dist/**/*"],
   "scripts": {
     "build": "tsc",
-    "publish-to-branch": "npm run build && gh-pages -d dist -b build"
+    "publish-to-branch": "npm run build && gh-pages -d ./ -b build"
   },
   "repository": {
     "type": "git",
