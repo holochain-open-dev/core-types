@@ -1,4 +1,5 @@
+import { Hash } from "./common";
 export interface HoloHashed<T> {
-    hash: Uint8Array;
+    hash: Hash;
     content: T;
 }
