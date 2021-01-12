@@ -1,30 +1,26 @@
-import { AgentPubKey, Hash } from './common';
-import { EntryType } from './entry';
-import { Timestamp } from './timestamp';
+import { AgentPubKey, Hash, Signature } from "./common";
+import { EntryType } from "./entry";
+import { HoloHashed } from "./hashed";
+import { Timestamp } from "./timestamp";
 
-export interface SignedHeaderHashed {
-  header: HeaderHashed;
+export interface SignedHeaderHashed<H extends Header = Header> {
+  header: HoloHashed<H>;
   signature: Signature;
 }
 
-export type Signature = any;
-
-export interface HeaderHashed {
-  content: Header;
-  hash: Uint8Array;
-}
+export type HeaderHashed = HoloHashed<Header>;
 
 export enum HeaderType {
-  Dna = 'Dna',
-  AgentValidationPkg = 'AgentValidationPkg',
-  InitZomesComplete = 'InitZomesComplete',
-  CreateLink = 'CreateLink',
-  DeleteLink = 'DeleteLink',
-  OpenChain = 'OpenChain',
-  CloseChain = 'CloseChain',
-  Create = 'Create',
-  Update = 'Update',
-  Delete = 'Delete',
+  Dna = "Dna",
+  AgentValidationPkg = "AgentValidationPkg",
+  InitZomesComplete = "InitZomesComplete",
+  CreateLink = "CreateLink",
+  DeleteLink = "DeleteLink",
+  OpenChain = "OpenChain",
+  CloseChain = "CloseChain",
+  Create = "Create",
+  Update = "Update",
+  Delete = "Delete",
 }
 
 export type HeaderContent<T extends HeaderType, H> = H & {

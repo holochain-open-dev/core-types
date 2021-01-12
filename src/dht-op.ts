@@ -6,23 +6,26 @@ import {
   Header,
   HeaderType,
   NewEntryHeader,
+  SignedHeaderHashed,
   Update,
-} from './header';
-import { Element } from './element';
-import { Entry } from './entry';
+} from "./header";
+import { Element } from "./element";
+import { Entry } from "./entry";
+import { HoloHashed } from "./hashed";
+import { Signature } from "./common";
 
 // https://github.com/holochain/holochain/blob/develop/crates/types/src/dht_op.rs
 
 export enum DHTOpType {
-  StoreElement = 'StoreElement',
-  StoreEntry = 'StoreEntry',
-  RegisterAgentActivity = 'RegisterAgentActivity',
-  RegisterUpdatedContent = 'RegisterUpdatedContent',
-  RegisterUpdatedElement = 'RegisterUpdatedElement',
-  RegisterDeletedBy = 'RegisterDeletedBy',
-  RegisterDeletedEntryHeader = 'RegisterDeletedEntryHeader',
-  RegisterAddLink = 'RegisterAddLink',
-  RegisterRemoveLink = 'RegisterRemoveLink',
+  StoreElement = "StoreElement",
+  StoreEntry = "StoreEntry",
+  RegisterAgentActivity = "RegisterAgentActivity",
+  RegisterUpdatedContent = "RegisterUpdatedContent",
+  RegisterUpdatedElement = "RegisterUpdatedElement",
+  RegisterDeletedBy = "RegisterDeletedBy",
+  RegisterDeletedEntryHeader = "RegisterDeletedEntryHeader",
+  RegisterAddLink = "RegisterAddLink",
+  RegisterRemoveLink = "RegisterRemoveLink",
 }
 
 export const DHT_SORT_PRIORITY = [
@@ -37,9 +40,9 @@ export const DHT_SORT_PRIORITY = [
   DHTOpType.RegisterRemoveLink,
 ];
 
-export interface DHTOpContent<T, H> {
+export interface DHTOpContent<T, H extends Header> {
   type: T;
-  header: H;
+  header: SignedHeaderHashed<H>;
 }
 
 export type DHTOp =
@@ -62,54 +65,58 @@ export function elementToDHTOps(element: Element): DHTOp[] {
 
   allDhtOps.push({
     type: DHTOpType.RegisterAgentActivity,
-    header: element.header,
+    header: element.signed_header,
   });
   allDhtOps.push({
     type: DHTOpType.StoreElement,
-    header: element.header,
-    maybe_entry: element.maybe_entry,
+    header: element.signed_header,
+    maybe_entry: element.entry,
   });
 
   // Each header derives into different DHTOps
 
-  if (element.header.type == HeaderType.Update) {
+  if (element.signed_header.header.content.type == HeaderType.Update) {
     allDhtOps.push({
       type: DHTOpType.RegisterUpdatedContent,
-      header: element.header,
+      header: element.signed_header as SignedHeaderHashed<Update>,
     });
     allDhtOps.push({
       type: DHTOpType.RegisterUpdatedElement,
-      header: element.header,
+      header: element.signed_header as SignedHeaderHashed<Update>,
     });
     allDhtOps.push({
       type: DHTOpType.StoreEntry,
-      header: element.header,
-      entry: element.maybe_entry as Entry,
+      header: element.signed_header as SignedHeaderHashed<Update>,
+      entry: element.entry as Entry,
     });
-  } else if (element.header.type == HeaderType.Create) {
+  } else if (element.signed_header.header.content.type == HeaderType.Create) {
     allDhtOps.push({
       type: DHTOpType.StoreEntry,
-      header: element.header as Create,
-      entry: element.maybe_entry as Entry,
+      header: element.signed_header as SignedHeaderHashed<Create>,
+      entry: element.entry as Entry,
     });
-  } else if (element.header.type == HeaderType.Delete) {
+  } else if (element.signed_header.header.content.type == HeaderType.Delete) {
     allDhtOps.push({
       type: DHTOpType.RegisterDeletedBy,
-      header: element.header as Delete,
+      header: element.signed_header as SignedHeaderHashed<Delete>,
     });
     allDhtOps.push({
       type: DHTOpType.RegisterDeletedEntryHeader,
-      header: element.header as Delete,
+      header: element.signed_header as SignedHeaderHashed<Delete>,
     });
-  } else if (element.header.type == HeaderType.DeleteLink) {
+  } else if (
+    element.signed_header.header.content.type == HeaderType.DeleteLink
+  ) {
     allDhtOps.push({
       type: DHTOpType.RegisterRemoveLink,
-      header: element.header as DeleteLink,
+      header: element.signed_header as SignedHeaderHashed<DeleteLink>,
     });
-  } else if (element.header.type == HeaderType.CreateLink) {
+  } else if (
+    element.signed_header.header.content.type == HeaderType.CreateLink
+  ) {
     allDhtOps.push({
       type: DHTOpType.RegisterAddLink,
-      header: element.header as CreateLink,
+      header: element.signed_header as SignedHeaderHashed<CreateLink>,
     });
   }
 
@@ -118,7 +125,7 @@ export function elementToDHTOps(element: Element): DHTOp[] {
 
 export function sortDHTOps(dhtOps: DHTOp[]): DHTOp[] {
   const prio = (dhtOp: DHTOp) =>
-    DHT_SORT_PRIORITY.findIndex(type => type === dhtOp.type);
+    DHT_SORT_PRIORITY.findIndex((type) => type === dhtOp.type);
   return dhtOps.sort((dhtA: DHTOp, dhtB: DHTOp) => prio(dhtA) - prio(dhtB));
 }
 
