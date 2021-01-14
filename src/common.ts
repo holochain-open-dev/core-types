@@ -6,7 +6,7 @@ export type Hash = Uint8Array;
 export type AgentPubKey = Uint8Array;
 export type Signature = Uint8Array;
 
-export type CellId = [AgentPubKey, Hash];
+export type CellId = [Hash, AgentPubKey];
 
 export function getAgentPubKey(cellId: CellId): AgentPubKey {
   return cellId[0];
