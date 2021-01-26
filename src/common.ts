@@ -2,8 +2,8 @@ export type Dictionary<T> = {
   [key: string]: T;
 };
 
-export type Hash = Uint8Array;
-export type AgentPubKey = Uint8Array;
+export type Hash = string;
+export type AgentPubKey = string;
 export type Signature = Uint8Array;
 
 export type CellId = [Hash, AgentPubKey];
