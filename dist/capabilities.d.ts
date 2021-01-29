@@ -8,7 +8,10 @@ export interface CapClaim {
 export interface ZomeCallCapGrant {
     tag: string;
     access: CapAccess;
-    functions: string[];
+    functions: Array<{
+        zome: string;
+        fn_name: string;
+    }>;
 }
 export declare type CapAccess = "Unrestricted" | {
     Transferable: {
