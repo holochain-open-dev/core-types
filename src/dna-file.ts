@@ -6,8 +6,8 @@ export interface DnaFile {
 }
 
 export interface DnaDef {
-  name: String;
-  uuid: String;
+  name: string;
+  uuid: string;
   properties: Uint8Array;
   zomes: Zomes;
 }
