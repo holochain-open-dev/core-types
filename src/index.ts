@@ -9,3 +9,4 @@ export * from './metadata';
 export * from './dna-file';
 export * from './hashed';
 export * from './timestamp';
+export * from './utils';
