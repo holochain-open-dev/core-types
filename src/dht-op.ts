@@ -11,8 +11,6 @@ import {
 } from "./header";
 import { Element } from "./element";
 import { Entry } from "./entry";
-import { HoloHashed } from "./hashed";
-import { Signature } from "./common";
 
 // https://github.com/holochain/holochain/blob/develop/crates/types/src/dht_op.rs
 
