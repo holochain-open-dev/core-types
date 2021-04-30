@@ -10,4 +10,5 @@ export * from './dna-file';
 export * from './hashed';
 export * from './timestamp';
 export * from './utils';
+export * from './validation';
 //# sourceMappingURL=index.js.map
