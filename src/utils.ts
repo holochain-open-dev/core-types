@@ -32,7 +32,3 @@ export function millisToTimestamp(millis: number): Timestamp {
 export function timestampToMillis(timestamp: Timestamp): number {
   return timestamp[0] * 1000 + Math.floor(timestamp[1] / 1000);
 }
-
-export function now(): Timestamp {
-  return millisToTimestamp(Date.now());
-}
