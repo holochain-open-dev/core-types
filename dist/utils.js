@@ -19,7 +19,4 @@ export function millisToTimestamp(millis) {
 export function timestampToMillis(timestamp) {
     return timestamp[0] * 1000 + Math.floor(timestamp[1] / 1000);
 }
-export function now() {
-    return millisToTimestamp(Date.now());
-}
 //# sourceMappingURL=utils.js.map

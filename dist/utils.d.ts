@@ -5,4 +5,3 @@ export declare function serializeHash(hash: Uint8Array): string;
 export declare function getCellIdForDnaHash(appInfo: AppInfoResponse, dnaHash: string): CellId;
 export declare function millisToTimestamp(millis: number): Timestamp;
 export declare function timestampToMillis(timestamp: Timestamp): number;
-export declare function now(): Timestamp;
