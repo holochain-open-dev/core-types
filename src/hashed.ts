@@ -1,6 +1,6 @@
-import { Hash } from "./common";
+import { HoloHashB64 } from './common';
 
 export interface HoloHashed<T> {
-  hash: Hash;
+  hash: HoloHashB64;
   content: T;
 }

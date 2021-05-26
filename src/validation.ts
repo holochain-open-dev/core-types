@@ -1,4 +1,4 @@
-import { AgentPubKey, Hash } from './common';
+import { AgentPubKeyB64, DhtOpHashB64 } from './common';
 import { Timestamp } from './timestamp';
 
 export enum ValidationStatus {
@@ -8,8 +8,8 @@ export enum ValidationStatus {
 }
 
 export interface ValidationReceipt {
-  dht_op_hash: Hash;
+  dht_op_hash: DhtOpHashB64;
   validation_status: ValidationStatus;
-  validator: AgentPubKey;
+  validator: AgentPubKeyB64;
   when_integrated: Timestamp;
 }

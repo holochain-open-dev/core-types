@@ -1,8 +1,8 @@
-import { AgentPubKey } from "./common";
+import { AgentPubKeyB64 } from "./common";
 export declare type CapSecret = string;
 export interface CapClaim {
     tag: string;
-    grantor: AgentPubKey;
+    grantor: AgentPubKeyB64;
     secret: CapSecret;
 }
 export interface ZomeCallCapGrant {
@@ -20,11 +20,11 @@ export declare type CapAccess = "Unrestricted" | {
 } | {
     Assigned: {
         secret: CapSecret;
-        assignees: AgentPubKey[];
+        assignees: AgentPubKeyB64[];
     };
 };
 export declare type CapGrant = {
-    ChainAuthor: AgentPubKey;
+    ChainAuthor: AgentPubKeyB64;
 } | {
     RemoteAgent: ZomeCallCapGrant;
 };

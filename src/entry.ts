@@ -1,5 +1,5 @@
 import { CapClaim, ZomeCallCapGrant } from './capabilities';
-import { AgentPubKey } from './common';
+import { AgentPubKeyB64 } from './common';
 
 export type EntryVisibility = 'Public' | 'Private';
 export type AppEntryType = {
@@ -20,7 +20,7 @@ export interface EntryContent<E extends string, C> {
 }
 
 export type Entry =
-  | EntryContent<'Agent', AgentPubKey>
+  | EntryContent<'Agent', AgentPubKeyB64>
   | EntryContent<'App', any>
   | EntryContent<'CapGrant', ZomeCallCapGrant>
   | EntryContent<'CapClaim', CapClaim>;

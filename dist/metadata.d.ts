@@ -1,4 +1,4 @@
-import { Dictionary, Hash } from './common';
+import { Dictionary, EntryHashB64, HeaderHashB64 } from './common';
 import { NewEntryHeader } from './header';
 import { Timestamp } from './timestamp';
 export interface Metadata {
@@ -10,28 +10,28 @@ export interface Metadata {
     misc_meta: Dictionary<MiscMetaVal>;
 }
 export declare type SysMetaVal = {
-    NewEntry: Hash;
+    NewEntry: HeaderHashB64;
 } | {
-    Update: Hash;
+    Update: HeaderHashB64;
 } | {
-    Delete: Hash;
+    Delete: HeaderHashB64;
 } | {
-    Activity: Hash;
+    Activity: HeaderHashB64;
 } | {
-    DeleteLink: Hash;
+    DeleteLink: HeaderHashB64;
 } | {
-    CustomPackage: Hash;
+    CustomPackage: HeaderHashB64;
 };
-export declare function getSysMetaValHeaderHash(sys_meta_val: SysMetaVal): Hash | undefined;
+export declare function getSysMetaValHeaderHash(sys_meta_val: SysMetaVal): HeaderHashB64 | undefined;
 export interface LinkMetaKey {
-    base: Hash;
+    base: EntryHashB64;
     zome_id: number;
     tag: any;
-    header_hash: Hash;
+    header_hash: HeaderHashB64;
 }
 export interface LinkMetaVal {
-    link_add_hash: Hash;
-    target: Hash;
+    link_add_hash: HeaderHashB64;
+    target: EntryHashB64;
     timestamp: Timestamp;
     zome_id: number;
     tag: any;
@@ -53,7 +53,7 @@ export declare enum ChainStatus {
 }
 export interface HighestObserved {
     header_seq: number;
-    hash: Hash[];
+    hash: HeaderHashB64[];
 }
 export declare enum EntryDhtStatus {
     Live = 0,
