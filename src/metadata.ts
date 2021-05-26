@@ -1,4 +1,10 @@
-import { Dictionary, Hash } from './common';
+import {
+  AgentPubKeyB64,
+  Dictionary,
+  EntryHashB64,
+  HeaderHashB64,
+  HoloHashB64,
+} from './common';
 import { NewEntryHeader } from './header';
 import { Timestamp } from './timestamp';
 
@@ -13,48 +19,48 @@ export interface Metadata {
 
 export type SysMetaVal =
   | {
-      NewEntry: Hash;
+      NewEntry: HeaderHashB64;
     }
   | {
-      Update: Hash;
+      Update: HeaderHashB64;
     }
   | {
-      Delete: Hash;
+      Delete: HeaderHashB64;
     }
   | {
-      Activity: Hash;
+      Activity: HeaderHashB64;
     }
   | {
-      DeleteLink: Hash;
+      DeleteLink: HeaderHashB64;
     }
   | {
-      CustomPackage: Hash;
+      CustomPackage: HeaderHashB64;
     };
 
 export function getSysMetaValHeaderHash(
   sys_meta_val: SysMetaVal
-): Hash | undefined {
-  if ((sys_meta_val as { NewEntry: Hash }).NewEntry)
-    return (sys_meta_val as { NewEntry: Hash }).NewEntry;
-  if ((sys_meta_val as { Update: Hash }).Update)
-    return (sys_meta_val as { Update: Hash }).Update;
-  if ((sys_meta_val as { Delete: Hash }).Delete)
-    return (sys_meta_val as { Delete: Hash }).Delete;
-  if ((sys_meta_val as { Activity: Hash }).Activity)
-    return (sys_meta_val as { Activity: Hash }).Activity;
+): HeaderHashB64 | undefined {
+  if ((sys_meta_val as { NewEntry: HeaderHashB64 }).NewEntry)
+    return (sys_meta_val as { NewEntry: HeaderHashB64 }).NewEntry;
+  if ((sys_meta_val as { Update: HeaderHashB64 }).Update)
+    return (sys_meta_val as { Update: HeaderHashB64 }).Update;
+  if ((sys_meta_val as { Delete: HeaderHashB64 }).Delete)
+    return (sys_meta_val as { Delete: HeaderHashB64 }).Delete;
+  if ((sys_meta_val as { Activity: HeaderHashB64 }).Activity)
+    return (sys_meta_val as { Activity: HeaderHashB64 }).Activity;
   return undefined;
 }
 
 export interface LinkMetaKey {
-  base: Hash;
+  base: EntryHashB64;
   zome_id: number;
   tag: any;
-  header_hash: Hash;
+  header_hash: HeaderHashB64;
 }
 
 export interface LinkMetaVal {
-  link_add_hash: Hash;
-  target: Hash;
+  link_add_hash: HeaderHashB64;
+  target: EntryHashB64;
   timestamp: Timestamp;
   zome_id: number;
   tag: any;
@@ -78,7 +84,7 @@ export enum ChainStatus {
 
 export interface HighestObserved {
   header_seq: number;
-  hash: Hash[];
+  hash: HeaderHashB64[];
 }
 
 export enum EntryDhtStatus {

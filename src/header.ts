@@ -1,7 +1,13 @@
-import { AgentPubKey, Hash, Signature } from "./common";
-import { EntryType } from "./entry";
-import { HoloHashed } from "./hashed";
-import { Timestamp } from "./timestamp";
+import {
+  AgentPubKeyB64,
+  DnaHashB64,
+  EntryHashB64,
+  HeaderHashB64,
+  Signature,
+} from './common';
+import { EntryType } from './entry';
+import { HoloHashed } from './hashed';
+import { Timestamp } from './timestamp';
 
 export interface SignedHeaderHashed<H extends Header = Header> {
   header: HoloHashed<H>;
@@ -11,16 +17,16 @@ export interface SignedHeaderHashed<H extends Header = Header> {
 export type HeaderHashed = HoloHashed<Header>;
 
 export enum HeaderType {
-  Dna = "Dna",
-  AgentValidationPkg = "AgentValidationPkg",
-  InitZomesComplete = "InitZomesComplete",
-  CreateLink = "CreateLink",
-  DeleteLink = "DeleteLink",
-  OpenChain = "OpenChain",
-  CloseChain = "CloseChain",
-  Create = "Create",
-  Update = "Update",
-  Delete = "Delete",
+  Dna = 'Dna',
+  AgentValidationPkg = 'AgentValidationPkg',
+  InitZomesComplete = 'InitZomesComplete',
+  CreateLink = 'CreateLink',
+  DeleteLink = 'DeleteLink',
+  OpenChain = 'OpenChain',
+  CloseChain = 'CloseChain',
+  Create = 'Create',
+  Update = 'Update',
+  Delete = 'Delete',
 }
 
 export type HeaderContent<T extends HeaderType, H> = H & {
@@ -43,18 +49,18 @@ export type NewEntryHeader = Create | Update;
 export interface Dna {
   type: HeaderType.Dna;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
-  hash: Hash;
+  hash: DnaHashB64;
 }
 
 export interface AgentValidationPkg {
   type: HeaderType.AgentValidationPkg;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 
   membrane_proof: any;
 }
@@ -62,22 +68,22 @@ export interface AgentValidationPkg {
 export interface InitZomesComplete {
   type: HeaderType.InitZomesComplete;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 }
 
 export interface CreateLink {
   type: HeaderType.CreateLink;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 
-  base_address: Hash;
-  target_address: Hash;
+  base_address: EntryHashB64;
+  target_address: EntryHashB64;
   zome_id: number;
   tag: any;
 }
@@ -85,72 +91,72 @@ export interface CreateLink {
 export interface DeleteLink {
   type: HeaderType.DeleteLink;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 
-  base_address: Hash;
-  link_add_address: Hash;
+  base_address: EntryHashB64;
+  link_add_address: HeaderHashB64;
 }
 
 export interface OpenChain {
   type: HeaderType.OpenChain;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 
-  prev_dna_hash: Hash;
+  prev_dna_hash: DnaHashB64;
 }
 
 export interface CloseChain {
   type: HeaderType.CloseChain;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 
-  new_dna_hash: Hash;
+  new_dna_hash: DnaHashB64;
 }
 
 export interface Update {
   type: HeaderType.Update;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 
-  original_header_address: Hash;
-  original_entry_address: Hash;
+  original_header_address: HeaderHashB64;
+  original_entry_address: EntryHashB64;
 
   entry_type: EntryType;
-  entry_hash: Hash;
+  entry_hash: EntryHashB64;
 }
 
 export interface Delete {
   type: HeaderType.Delete;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 
-  deletes_address: Hash;
-  deletes_entry_address: Hash;
+  deletes_address: HeaderHashB64;
+  deletes_entry_address: EntryHashB64;
 }
 
 export interface Create {
   type: HeaderType.Create;
 
-  author: AgentPubKey;
+  author: AgentPubKeyB64;
   timestamp: Timestamp;
   header_seq: number;
-  prev_header: Hash;
+  prev_header: HeaderHashB64;
 
   entry_type: EntryType;
-  entry_hash: Hash;
+  entry_hash: EntryHashB64;
 }
