@@ -15,12 +15,12 @@ export function getCellIdForDnaHash(
   dnaHash: string
 ): CellId {
   const cell = appInfo.cell_data.find(
-    (cellData) => serializeHash(cellData[0][0]) === dnaHash
+    (cellData) => serializeHash(cellData.cell_id[0]) === dnaHash
   );
 
   if (!cell) throw new Error(`Could not find cell for dna ${dnaHash}`);
 
-  return cell[0];
+  return cell.cell_id;
 }
 
 export function millisToTimestamp(millis: number): Timestamp {
