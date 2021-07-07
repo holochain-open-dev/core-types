@@ -1,10 +1,4 @@
-import {
-  AgentPubKeyB64,
-  Dictionary,
-  EntryHashB64,
-  HeaderHashB64,
-  HoloHashB64,
-} from './common';
+import { Dictionary, EntryHashB64, HeaderHashB64 } from './common';
 import { NewEntryHeader } from './header';
 import { Timestamp } from './timestamp';
 
