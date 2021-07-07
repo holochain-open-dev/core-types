@@ -1,3 +1,5 @@
+import { HoloHash } from "@holochain/conductor-api";
+
 export type Dictionary<T> = {
   [key: string]: T;
 };
@@ -12,3 +14,5 @@ export type AnyDhtHashB64 = HoloHashB64;
 export type Signature = Uint8Array;
 
 export type CellId = [DnaHashB64, AgentPubKeyB64];
+export type EntryHash = HoloHash;
+export type HeaderHash = HoloHash;
